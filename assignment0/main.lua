@@ -1,4 +1,6 @@
 --[[
+
+    POGI AKO, AKO AY POGI
     GD50 2018
     Pong Remake
 
