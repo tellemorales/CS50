@@ -50,7 +50,10 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 -- paddle movement speed
-PADDLE_SPEED = 200
+PADDLE_SPEED = 180
+
+-- ai mode
+aiMode = false
 
 --[[
     Called just once at the beginning of the game; used to set up
@@ -244,12 +247,17 @@ function love.update(dt)
     end
 
     -- player 2
-    if love.keyboard.isDown('up') then
-        player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
-        player2.dy = PADDLE_SPEED
-    else
-        player2.dy = 0
+    -- aiMode
+    if aiMode then
+        player2.y = ball.y
+    else      
+        if love.keyboard.isDown('up') then
+            player2.dy = -PADDLE_SPEED
+        elseif love.keyboard.isDown('down') then
+            player2.dy = PADDLE_SPEED
+        else
+            player2.dy = 0
+        end
     end
 
     -- update our ball based on its DX and DY only if we're in play state;
@@ -270,6 +278,10 @@ end
 ]]
 function love.keypressed(key)
     -- `key` will be whatever key this callback detected as pressed
+    -- initialize key for aiMode
+    if key == 'a' and gameState == 'start' then
+        aiMode = true
+    end
     if key == 'escape' then
         -- the function LÖVE2D uses to quit the application
         love.event.quit()
