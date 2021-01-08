@@ -22,6 +22,12 @@ function LevelMaker.generate(width, height)
     local tileset = math.random(20)
     local topperset = math.random(20)
 
+    local flag = false --new
+    local key = false --new
+    local keylockcolor = math.random(4) --new
+    local polecolor = math.random(3, 6) --new
+    local flagcolor = polecolor + 4 --new
+
     -- insert blank tables into tiles for later access
     for x = 1, height do
         table.insert(tiles, {})
@@ -40,8 +46,17 @@ function LevelMaker.generate(width, height)
         -- chance to just be emptiness
         if math.random(7) == 1 then
             for y = 7, height do
-                table.insert(tiles[y],
-                    Tile(x, y, tileID, nil, tileset, topperset))
+                if x == 1 or x == 98 or x == 99 then --new
+                    tileID = TILE_ID_GROUND --new
+                    table.insert(tiles[y],
+                        Tile(x, y, tileID, y == 7 and topper or nil, tileset, topperset)) --new
+                    
+                else
+                    tileID = TILE_ID_EMPTY
+                    table.insert(tiles[y],
+                        Tile(x, y, tileID, nil, tileset, topperset))
+                end
+
             end
         else
             tileID = TILE_ID_GROUND
@@ -52,6 +67,10 @@ function LevelMaker.generate(width, height)
                 table.insert(tiles[y],
                     Tile(x, y, tileID, y == 7 and topper or nil, tileset, topperset))
             end
+
+            if x >= 98 then --new
+                ::continue:: --new
+            end --new
 
             -- chance to generate a pillar
             if math.random(8) == 1 then
@@ -78,6 +97,8 @@ function LevelMaker.generate(width, height)
                 tiles[6][x] = Tile(x, 6, tileID, nil, tileset, topperset)
                 tiles[7][x].topper = nil
             
+            ::continue::
+
             -- chance to generate bushes
             elseif math.random(8) == 1 then
                 table.insert(objects,
@@ -92,6 +113,115 @@ function LevelMaker.generate(width, height)
                     }
                 )
             end
+
+            --new
+            if not flag then
+                --chance to spawn a key and lock
+                if math.random(10) == 1 then
+                    local t = tiles[5][x].tileID
+                    space = math.random(x, width - 20)
+                    --local t1 = tiles[5][space].tileID
+                    table.insert(objects,
+
+                        --key object
+                        GameObject{
+                            texture = 'keysandlocks',
+                            x = (x - 1) * TILE_SIZE,
+                            y = t == TILE_ID_GROUND and (blockHeight - 2) * TILE_SIZE or (6 - 1) * TILE_SIZE,
+                            width = 16,
+                            height = 16,
+                            frame = keylockcolor,
+                            collidable = true,
+                            hit = false,
+                            consumable = true,
+                            solid = false,
+                            onConsume = function(player, object)
+                                gSounds['pickup']:play()
+                                key = true
+                            end
+                        }
+                    )
+                    table.insert(objects,
+
+                        --lock object
+                        GameObject{
+                            texture = 'keysandlocks',
+                            x = space * TILE_SIZE,
+                            y = (blockHeight - 2) * TILE_SIZE,
+                            width = 16,
+                            height = 16,
+                            frame = keylockcolor + 4,
+                            collidable = true,
+                            hit = false,
+                            solid = true,
+                            consumable = false,
+
+                            onConsume = function(player, object)
+                                player.score = player.score + 100
+                            end,
+
+                            onCollide = function(obj)
+                                if not obj.hit then
+                                    if key then
+                                        obj.consumable = true
+                                        obj.hit = true
+                                        --spawn a pole
+                                        local pole = GameObject{
+                                            texture = 'flags',
+                                            x = (width - 2) * TILE_SIZE,
+                                            y = (height - 3) * TILE_SIZE,
+                                            width = 16,
+                                            height = 48,
+                                            frame = polecolor,
+                                            consumable = true,
+                                            collidable = true,
+                                            solid = false,
+                                            onConsume = function (player, object)
+                                                gStateMachine:change('play', {
+                                                    width = width + 50,
+                                                    score = player.score
+                                                })
+                                            end
+                                        }
+                                        local flags = GameObject{
+                                            texture = 'flags',
+                                            x = ((width - 1) * TILE_SIZE) - 8,
+                                            y = (height - 3) * TILE_SIZE,
+                                            width = 16,
+                                            height = 48,
+                                            frame = flagcolor,
+                                            consumable = true,
+                                            collidable = true,
+                                            solid = false,
+                                            onConsume = function (player, object)
+                                                gStateMachine:change('play', {
+                                                    width = width + 50,
+                                                    score = player.score
+                                                })
+                                            end
+                                        }
+                                        -- make the pole move up from the block and play a sound
+                                        Timer.tween(0.1, {
+                                            [pole] = {y = (blockHeight - 1) * TILE_SIZE}
+                                        })
+                                        -- make the flag move up from the block and play a sound
+                                        Timer.tween(0.1, {
+                                            [flags] = {y = ((blockHeight - 1) * TILE_SIZE) + 8}
+                                        })
+                                        gSounds['powerup-reveal']:play()
+
+                                        table.insert(objects, pole)
+                                        table.insert(objects, flags)
+                                    end
+                                end
+                                gSounds['empty-block']:play()
+                            end
+                        }
+                    )
+                    flag = true
+                end
+            end
+            --new
 
             -- chance to spawn a block
             if math.random(10) == 1 then

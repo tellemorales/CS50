@@ -8,9 +8,12 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
+    self.width = params.width --new
+    self.score = params.score --new
+
     self.camX = 0
     self.camY = 0
-    self.level = LevelMaker.generate(100, 10)
+    self.level = LevelMaker.generate(self.width, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0
@@ -36,6 +39,9 @@ function PlayState:init()
 
     self.player:changeState('falling')
 end
+
+function PlayState:init() --new
+end --new
 
 function PlayState:update(dt)
     Timer.update(dt)

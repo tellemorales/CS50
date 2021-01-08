@@ -34,6 +34,47 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     return spritesheet
 end
 
+--new
+function table.slice(tbl, first, last, step)
+    local sliced = {}
+  
+    for i = first or 1, last or #tbl, step or 1 do
+      sliced[#sliced+1] = tbl[i]
+    end
+  
+    return sliced
+end
+
+function GenerateFlagSet(atlas)
+    local quads = {}
+    local poles = {}
+    local flag1 = {}
+    local flag2 = {}
+    local counter = 1
+
+    poles = table.slice(GenerateQuads(atlas, 16, 48), 1, 6, 1)
+    flag1 = table.slice(GenerateQuads(atlas, 16, 16), 7, 28, 9)
+    flag2 = table.slice(GenerateQuads(atlas, 16, 16), 8, 32, 9)
+
+    for k, pole in pairs(poles) do
+        quads[counter] = pole
+        counter = counter + 1
+    end
+
+    for k, f1 in pairs(flag1) do
+        quads[counter] = f1
+        counter = counter + 1
+    end
+
+    for k, f2 in pairs(flag2) do
+        quads[counter] = f2
+        counter = counter + 1
+    end
+
+    return quads
+end
+--new
+
 --[[
     Divides quads we've generated via slicing our tile sheet into separate tile sets.
 ]]

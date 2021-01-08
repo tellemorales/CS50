@@ -49,6 +49,25 @@ function PlayerWalkingState:update(dt)
         end
     end
 
+      -- check if we've collided with any collidable game objects --new
+      for k, object in pairs(self.player.level.objects) do
+        if object:collides(self.player) then
+            if object.solid then
+                self.player.dy = 0
+                self.player.y = object.y - self.player.height
+
+                if love.keyboard.isDown('left') or love.keyboard.isDown('right') then
+                    self.player:changeState('walking')
+                else
+                    self.player:changeState('idle')
+                end
+            elseif object.consumable then
+                object.onConsume(self.player)
+                table.remove(self.player.level.objects, k)
+            end
+        end
+    end --new
+
     -- check if we've collided with any entities and die if so
     for k, entity in pairs(self.player.level.entities) do
         if entity:collides(self.player) then

@@ -55,14 +55,14 @@ require 'src/TileMap'
 
 
 gSounds = {
-    ['jump'] = love.audio.newSource('sounds/jump.wav'),
-    ['death'] = love.audio.newSource('sounds/death.wav'),
-    ['music'] = love.audio.newSource('sounds/music.wav'),
-    ['powerup-reveal'] = love.audio.newSource('sounds/powerup-reveal.wav'),
-    ['pickup'] = love.audio.newSource('sounds/pickup.wav'),
-    ['empty-block'] = love.audio.newSource('sounds/empty-block.wav'),
-    ['kill'] = love.audio.newSource('sounds/kill.wav'),
-    ['kill2'] = love.audio.newSource('sounds/kill2.wav')
+    ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
+    ['death'] = love.audio.newSource('sounds/death.wav', 'static'),
+    ['music'] = love.audio.newSource('sounds/music.wav', 'static'),
+    ['powerup-reveal'] = love.audio.newSource('sounds/powerup-reveal.wav', 'static'),
+    ['pickup'] = love.audio.newSource('sounds/pickup.wav', 'static'),
+    ['empty-block'] = love.audio.newSource('sounds/empty-block.wav', 'static'),
+    ['kill'] = love.audio.newSource('sounds/kill.wav', 'static'),
+    ['kill2'] = love.audio.newSource('sounds/kill2.wav', 'static')
 }
 
 gTextures = {
@@ -78,15 +78,15 @@ gTextures = {
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE),
-    
     ['toppers'] = GenerateQuads(gTextures['toppers'], TILE_SIZE, TILE_SIZE),
-    
     ['bushes'] = GenerateQuads(gTextures['bushes'], 16, 16),
     ['jump-blocks'] = GenerateQuads(gTextures['jump-blocks'], 16, 16),
     ['gems'] = GenerateQuads(gTextures['gems'], 16, 16),
     ['backgrounds'] = GenerateQuads(gTextures['backgrounds'], 256, 128),
     ['green-alien'] = GenerateQuads(gTextures['green-alien'], 16, 20),
-    ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16)
+    ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16),
+    ['keysandlocks'] = GenerateQuads(gTextures['keysandlocks'], 16, 16),
+    ['flags'] = GenerateFlagSet(gTextures['flags'])
 }
 
 -- these need to be added after gFrames is initialized because they refer to gFrames from within
