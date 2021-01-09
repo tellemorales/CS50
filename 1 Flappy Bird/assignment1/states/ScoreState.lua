@@ -49,7 +49,7 @@ function ScoreState:render()
         love.graphics.setFont(mediumFont)
         love.graphics.printf("Congrats! You won a silver medal!", 0, 160, VIRTUAL_WIDTH, 'center')
         love.graphics.draw(silver, (VIRTUAL_WIDTH / 2) - 15, (VIRTUAL_HEIGHT / 2) - 25, 0, .12, .12)
-    else 
+    elseif self.sore >= 15 then
         love.graphics.setFont(mediumFont)
         love.graphics.printf("Congrats! You won a gold medal!", 0, 160, VIRTUAL_WIDTH, 'center')
         love.graphics.draw(gold, (VIRTUAL_WIDTH / 2) - 15, (VIRTUAL_HEIGHT / 2) - 25, 0, .12, .12)
