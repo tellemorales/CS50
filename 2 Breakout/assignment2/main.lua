@@ -1,28 +1,4 @@
---[[
-    GD50
-    Breakout Remake
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-
-    Originally developed by Atari in 1976. An effective evolution of
-    Pong, Breakout ditched the two-player mechanic in favor of a single-
-    player game where the player, still controlling a paddle, was tasked
-    with eliminating a screen full of differently placed bricks of varying
-    values by deflecting a ball back at them.
-
-    This version is built to more closely resemble the NES than
-    the original Pong machines or the Atari 2600 in terms of
-    resolution, though in widescreen (16:9) so it looks nicer on 
-    modern systems.
-
-    Credit for graphics (amazing work!):
-    https://opengameart.org/users/buch
-
-    Credit for music (great loop):
-    http://freesound.org/people/joshuaempyre/sounds/251461/
-    http://www.soundcloud.com/empyreanma
-]]
 
 require 'src/Dependencies'
 
@@ -66,6 +42,7 @@ function love.load()
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
+        ['powerups'] = GenerateQuadsPowerups(gTextures['main']), 
         ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
     }
     
@@ -80,22 +57,23 @@ function love.load()
     -- set up our sound effects; later, we can just index this table and
     -- call each entry's `play` method
     gSounds = {
-        ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav'),
-        ['score'] = love.audio.newSource('sounds/score.wav'),
-        ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav'),
-        ['confirm'] = love.audio.newSource('sounds/confirm.wav'),
-        ['select'] = love.audio.newSource('sounds/select.wav'),
-        ['no-select'] = love.audio.newSource('sounds/no-select.wav'),
-        ['brick-hit-1'] = love.audio.newSource('sounds/brick-hit-1.wav'),
-        ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav'),
-        ['hurt'] = love.audio.newSource('sounds/hurt.wav'),
-        ['victory'] = love.audio.newSource('sounds/victory.wav'),
-        ['recover'] = love.audio.newSource('sounds/recover.wav'),
-        ['high-score'] = love.audio.newSource('sounds/high_score.wav'),
-        ['pause'] = love.audio.newSource('sounds/pause.wav'),
+        ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav','static'),
+        ['score'] = love.audio.newSource('sounds/score.wav','static'),
+        ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav','static'),
+        ['confirm'] = love.audio.newSource('sounds/confirm.wav','static'),
+        ['select'] = love.audio.newSource('sounds/select.wav','static'),
+        ['no-select'] = love.audio.newSource('sounds/no-select.wav','static'),
+        ['brick-hit-1'] = love.audio.newSource('sounds/brick-hit-1.wav','static'),
+        ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav','static'),
+        ['hurt'] = love.audio.newSource('sounds/hurt.wav','static'),
+        ['victory'] = love.audio.newSource('sounds/victory.wav','static'),
+        ['recover'] = love.audio.newSource('sounds/recover.wav','static'),
+        ['high-score'] = love.audio.newSource('sounds/high_score.wav','static'),
+        ['pause'] = love.audio.newSource('sounds/pause.wav','static'),
 
-        ['music'] = love.audio.newSource('sounds/music.wav')
+        ['music'] = love.audio.newSource('sounds/music.wav','stream')
     }
+
 
     -- the state machine we'll be using to transition between various states
     -- in our game instead of clumping them together in our update and draw
@@ -220,7 +198,7 @@ function loadHighScores()
     love.filesystem.setIdentity('breakout')
 
     -- if the file doesn't exist, initialize it with some default scores
-    if not love.filesystem.exists('breakout.lst') then
+    if not love.filesystem.getInfo('breakout.lst') == nil then
         local scores = ''
         for i = 10, 1, -1 do
             scores = scores .. 'CTO\n'
@@ -286,6 +264,13 @@ end
 --[[
     Renders the current FPS.
 ]]
+
+function renderKeys(keys) 
+    love.graphics.draw(gTextures['main'], gFrames['powerups'][10], VIRTUAL_WIDTH - 40,  VIRTUAL_HEIGHT - 15, 0)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print("X "..keys, VIRTUAL_WIDTH - 20, VIRTUAL_HEIGHT - 15)
+end
+
 function displayFPS()
     -- simple FPS display across all states
     love.graphics.setFont(gFonts['small'])
