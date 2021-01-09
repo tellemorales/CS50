@@ -10,6 +10,11 @@
 
 ScoreState = Class{__includes = BaseState}
 
+-- Load our image
+local gold = love.graphics.newImage('gold.png')
+local silver = love.graphics.newImage('silver.png')
+local bronze = love.graphics.newImage('bronze.png')
+
 --[[
     When we enter the score state, we expect to receive the score
     from the play state so we know what to render to the State.
