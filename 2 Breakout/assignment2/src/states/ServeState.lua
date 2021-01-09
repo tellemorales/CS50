@@ -25,17 +25,18 @@ function ServeState:enter(params)
     self.highScores = params.highScores
     self.level = params.level
     self.recoverPoints = params.recoverPoints
-
+    self.paddlePoints = params.paddlePoints
+    self.keys = params.keys
     -- init new ball (random color for fun)
-    self.ball = Ball()
-    self.ball.skin = math.random(7)
+    self.ball = {[1] = Ball(math.random(7))}  
+    
 end
 
 function ServeState:update(dt)
     -- have the ball track the player
     self.paddle:update(dt)
-    self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
-    self.ball.y = self.paddle.y - 8
+    self.ball[1].x = self.paddle.x + (self.paddle.width / 2) - 4
+    self.ball[1].y = self.paddle.y - 8
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- pass in all important state info to the PlayState
@@ -47,7 +48,10 @@ function ServeState:update(dt)
             highScores = self.highScores,
             ball = self.ball,
             level = self.level,
-            recoverPoints = self.recoverPoints
+            recoverPoints = self.recoverPoints,
+            paddlePoints = self.paddlePoints,
+            keys = self.keys
+            
         })
     end
 
@@ -58,7 +62,11 @@ end
 
 function ServeState:render()
     self.paddle:render()
-    self.ball:render()
+
+
+   for k, bol in pairs(self.ball) do
+      bol:render()
+    end
 
     for k, brick in pairs(self.bricks) do
         brick:render()
@@ -66,7 +74,8 @@ function ServeState:render()
 
     renderScore(self.score)
     renderHealth(self.health)
-
+    renderKeys(self.keys)
+    
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('Level ' .. tostring(self.level), 0, VIRTUAL_HEIGHT / 3,
         VIRTUAL_WIDTH, 'center')

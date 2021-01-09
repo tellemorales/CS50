@@ -21,14 +21,22 @@ function VictoryState:enter(params)
     self.health = params.health
     self.ball = params.ball
     self.recoverPoints = params.recoverPoints
+    self.paddlePoints = params.paddlePoints
+    self.keys = params.keys
+    self.paddle.size = math.max(self.paddle.size, 2)
+    self.paddle.width = self.paddle.size * 32
 end
 
 function VictoryState:update(dt)
     self.paddle:update(dt)
 
     -- have the ball track the player
-    self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
-    self.ball.y = self.paddle.y - 8
+    for k, bol in pairs(self.ball) do
+        table.remove(self.ball,k)
+    end
+    table.insert(self.ball,Ball(math.random(7)))
+    self.ball[1].x = self.paddle.x + (self.paddle.width / 2) - 4
+    self.ball[1].y = self.paddle.y - 8
 
     -- go to play screen if the player presses Enter
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
@@ -39,17 +47,21 @@ function VictoryState:update(dt)
             health = self.health,
             score = self.score,
             highScores = self.highScores,
-            recoverPoints = self.recoverPoints
+            recoverPoints = self.recoverPoints,
+            paddlePoints = self.paddlePoints,
+            keys = self.keys
         })
     end
 end
 
 function VictoryState:render()
     self.paddle:render()
-    self.ball:render()
-
+    for k, bol in pairs(self.ball) do
+    bol:render()
+    end
     renderHealth(self.health)
     renderScore(self.score)
+    renderKeys(self.keys)
 
     -- level complete text
     love.graphics.setFont(gFonts['large'])

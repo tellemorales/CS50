@@ -24,6 +24,9 @@ require 'src/Brick'
 -- a class used to generate our brick layouts (levels)
 require 'src/LevelMaker'
 
+-- we make powerups their own objects
+require 'src/Powerup'
+
 -- the rectangular entity the player controls, which deflects the ball
 require 'src/Paddle'
 

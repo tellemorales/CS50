@@ -47,6 +47,11 @@ function LevelMaker.createMap(level)
     -- highest color of the highest tier, no higher than 5
     local highestColor = math.min(5, level % 5 + 3)
 
+    -- only one brick is a locked brick. There is a possibility that the randomly selected brick
+        -- will become a locked brick and once that happens, the flag will be set to false.
+        --local lockFlag = true
+
+
     -- lay out bricks such that they touch each other and fill the space
     for y = 1, numRows do
         -- whether we want to enable skipping for this row
@@ -64,6 +69,7 @@ function LevelMaker.createMap(level)
         -- used only when we want to skip a block, for skip pattern
         local skipFlag = math.random(2) == 1 and true or false
 
+        
         -- used only when we want to alternate a block, for alternate pattern
         local alternateFlag = math.random(2) == 1 and true or false
 
@@ -111,6 +117,13 @@ function LevelMaker.createMap(level)
                 b.color = solidColor
                 b.tier = solidTier
             end 
+
+            
+            if math.random(4) == 2 then                    -- 1 in 2 chance
+                b.isLocked = true
+            
+            end
+            
 
             table.insert(bricks, b)
 
