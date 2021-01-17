@@ -17,7 +17,7 @@ public class CoinText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (helicopter != null) {
-			coins = helicopter.GetComponent<HeliController>().coinTotal;
+			coins = helicopter.GetComponent<HeliController>().pointTotal;
 		}
 		text.text = "Coins: " + coins;
 	}
