@@ -6,8 +6,8 @@ require 'Paddle'
 
 require 'Ball'
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+WINDOW_WIDTH = 1600
+WINDOW_HEIGHT = 900
 
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
@@ -340,7 +340,7 @@ function love.draw()
     
     if gameState == 'start' then
         love.graphics.setFont(smallFont)
-        love.graphics.printf('Welcome to Pong!', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Welcome to Pong!!!!!!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter to begin!', 0, 20, VIRTUAL_WIDTH, 'center')
      elseif gameState == 'serve' then
         if gameMode == 'pvp' then
@@ -391,7 +391,9 @@ function love.draw()
        
      elseif gameState == 'menu_mode' then
         love.graphics.setFont(largeFont)
-        love.graphics.printf('Welcome to Pong!',0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Welcome to Pong!!!!',0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Welcome to Pong!!!!',0, 20, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf('Welcome to Pong!!!!',0, -20, VIRTUAL_WIDTH, 'right')
         love.graphics.setFont(smallFont)
         love.graphics.printf('Choose mode:', 0, 90, VIRTUAL_WIDTH, 'center')
         love.graphics.setFont(smallFont)

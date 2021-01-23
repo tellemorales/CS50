@@ -8,7 +8,7 @@
 local push = {
   
   defaults = {
-    fullscreen = false,
+    fullscreen = true,
     resizable = false,
     pixelperfect = false,
     highdpi = true,
