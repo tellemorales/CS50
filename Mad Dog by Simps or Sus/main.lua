@@ -44,10 +44,14 @@ function love.load()
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end,
+        ['option'] = function() return OptionState() end,
+        ['rules'] = function() return RuleState() end
     }
     gStateMachine:change("start")
 
     love.keyboard.keysPressed = {}
+    
+    globalInput = {}
 
     -- create a global mouse x y table
     currentMousePos = {["x"] = nil, ["y"] = nil}
@@ -77,6 +81,8 @@ function love.update(dt)
     currentMousePos.x, currentMousePos.y = push:toGame(x, y)
 
     gStateMachine:update(dt)
+    
+    globalInput = {}
 
     -- reset the key that was pressed
     love.keyboard.keysPressed = {}
@@ -93,6 +99,16 @@ function love.keyboard.wasPressed(key)
         return false
     end
 
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    globalInput[button] = true
+
+end
+
+
+function isPressed(key)
+    return globalInput[key]
 end
 
 function love.draw()
