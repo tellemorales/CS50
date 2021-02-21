@@ -36,7 +36,7 @@ function EnterHighScoreState:update(dt)
         end
 
     --change this to a different file name/create a file
-        love.filesystem.write('breakout.lst', scoresStr)
+        love.filesystem.write('maddog.lst', scoresStr)
 
         gStateMachine:change('high-scores', {
             highScores = self.highScores
@@ -63,32 +63,31 @@ function EnterHighScoreState:update(dt)
 end
 
 function EnterHighScoreState:render()
-    love.graphics.setFont(main['medium'])
-    love.graphics.printf('Your score: ' .. tostring(self.score), 0, 30
-        VIRTUAL_WIDTH, 'center')
+    love.graphics.setFont(gFonts['XXLarge'])
+    love.graphics.printf('Your score: ' .. tostring(self.score), 0, 30, VIRTUAL_WIDTH, 'center')
     
-    love.graphics.setFont(main['large'])
+    love.graphics.setFont(gFonts['XXXLarge'])
     
     if highlightedChar == 1 then
         love.graphics.setColor(103/255, 1, 1, 1)
     end
 
-    love.graphics.print(string.char(chars[1]), VIRTUAL_WIDTH / 2 - 28, VIRTUAL_HEIGHT / 2)
+    love.graphics.print(string.char(chars[1]), VIRTUAL_WIDTH / 2 - 147, VIRTUAL_HEIGHT / 2)
     love.graphics.setColor(255, 255, 255, 255)
 
     if highlightedChar == 2 then
         love.graphics.setColor(103/255, 255/255, 255/255, 255/255)
     end
-    love.graphics.print(string.char(chars[2]), VIRTUAL_WIDTH / 2 - 6, VIRTUAL_HEIGHT / 2)
+    love.graphics.print(string.char(chars[2]), VIRTUAL_WIDTH / 2 - 20, VIRTUAL_HEIGHT / 2)
     love.graphics.setColor(255, 255, 255, 255)
 
     if highlightedChar == 3 then
         love.graphics.setColor(103/255, 255/255, 255/255, 255/255)
     end
-    love.graphics.print(string.char(chars[3]), VIRTUAL_WIDTH / 2 + 20, VIRTUAL_HEIGHT / 2)
+    love.graphics.print(string.char(chars[3]), VIRTUAL_WIDTH / 2 + 90, VIRTUAL_HEIGHT / 2)
     love.graphics.setColor(255, 255, 255, 255)
     
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.printf('Press Enter to confirm!', 0, VIRTUAL_HEIGHT - 18,
+    love.graphics.setFont(gFonts['XLarge'])
+    love.graphics.printf('Press Enter to confirm!', 0, VIRTUAL_HEIGHT - 300,
         VIRTUAL_WIDTH, 'center')
 end

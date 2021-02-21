@@ -6,9 +6,9 @@ function PlayState:init()
     self.timer = 60
     self.caninput = true
 
-    Timer.every(1, function()
+    Timer.every(1, function() 
         self.timer = self.timer - 1
-    )
+    end)
 end
 
 function PlayState:enter(params)
@@ -75,7 +75,7 @@ function PlayState:mousehighlight()
     local mgx = math.floor((mx - self.board.x)/200) + 1
     local mgy = math.floor((my - self.board.y)/200) + 1
 
-    if mgx > 0 and mgy > 0 and mgx < 9 mgy < 9 then
+    if mgx > 0 and mgy > 0 and mgx < 9 and mgy < 9 then
         if love.mouse.wasClicked(1) then
             if not self.ht then
                 self.ht = self.board.tiles[mgy][mgx]

@@ -45,9 +45,12 @@ function love.load()
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end,
         ['option'] = function() return OptionState() end,
-        ['rules'] = function() return RuleState() end
+        ['rules'] = function() return RuleState() end,
+        ['highscore'] = function() return HighScoreState() end
     }
-    gStateMachine:change("start")
+    gStateMachine:change("start", {
+        highScore = loadScores()
+    })
 
     love.keyboard.keysPressed = {}
     
@@ -128,4 +131,50 @@ function love.draw()
     gStateMachine:render()
 
     push:finish()
+end
+
+function loadScores()
+    love.filesystem.setIdentity('maddog')
+
+    -- if the file doesn't exist, initialize it with some default scores
+    if not love.filesystem.getInfo('maddogt.lst') == nil then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'CTO\n'
+            scores = scores .. tostring(i * 1000) .. '\n'
+        end
+
+        love.filesystem.write('maddog.lst', scores)
+    end
+
+    -- flag for whether we're reading a name or not
+    local name = true
+    local currentName = nil
+    local counter = 1
+
+    -- initialize scores table with at least 10 blank entries
+    local scores = {}
+
+    for i = 1, 10 do
+        -- blank table; each will hold a name and a score
+        scores[i] = {
+            name = nil,
+            score = nil
+        }
+    end
+
+    -- iterate over each line in the file, filling in names and scores
+    for line in love.filesystem.lines('maddog.lst') do
+        if name then
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+
+        -- flip the name flag
+        name = not name
+    end
+
+    return scores
 end

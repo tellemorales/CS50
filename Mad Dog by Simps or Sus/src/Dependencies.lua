@@ -18,6 +18,10 @@ require 'src/StateMachine'
 require 'src/states/BaseState'
 require 'src/states/StartState'
 require 'src/states/PlayState'
+require 'src/states/OptionState'
+require 'src/states/RuleState'
+require 'src/states/EnterHighScoreState'
+require 'src/states/HighScoreState'
 require 'src/Util'
 
 
@@ -36,14 +40,23 @@ gTextures = {
     ['option_menu'] = love.graphics.newImage('graphics/option_buttons.png'),
     ['zzz'] = love.graphics.newImage('graphics/z.png'),
     ['logo'] = love.graphics.newImage('graphics/logo.png'),
-    ['bone'] = love.graphics.newImage('graphics/bone.png')
+    ['bone'] = love.graphics.newImage('graphics/bone.png'),
+    ['left_arrow'] = love.graphics.newImage('graphics/left_arrow.png'),
+    ['selected_left_arrow'] = love.graphics.newImage('graphics/selected_left_arrow.png'),
+    ['right_arrow'] = love.graphics.newImage('graphics/right_arrow.png'),
+    ['selected_right_arrow'] = love.graphics.newImage('graphics/selected_right_arrow.png'),
+    ['rules'] = love.graphics.newImage('graphics/title_rule.png')
 }
 
 -- initialize fonts
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/main.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/main.ttf', 16),
-    ['large'] = love.graphics.newFont('fonts/main.ttf', 32)
+    ['Xmedium'] = love.graphics.newFont('fonts/main.ttf', 24),
+    ['large'] = love.graphics.newFont('fonts/main.ttf', 32),
+    ['XLarge'] = love.graphics.newFont('fonts/main.ttf', 48),
+    ['XXLarge'] = love.graphics.newFont('fonts/main.ttf', 64),
+    ['XXXLarge'] = love.graphics.newFont('fonts/main.ttf', 94)
 }
 
 -- initialize sounds

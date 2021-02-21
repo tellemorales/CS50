@@ -50,7 +50,7 @@ end
 
 function StartState:update(dt)
 
- if isPressed(key) then  
+    if isPressed(key) then  
         gSounds['select']:play()
     end
 
@@ -59,6 +59,11 @@ function StartState:update(dt)
         
     elseif love.mouseIn(self.x['option'], self.y['option'], self.width['option'], self.height['option']) and isPressed(1) then
         gStateMachine:change('option')
+
+    elseif love.mouseIn(self.x['highscore'], self.y['highscore'], self.width['highscore'], self.height['highscore']) and isPressed(1) then
+        gStateMachine:change('highscore', {
+            highScore = self.highScore
+        })
 
     elseif love.mouseIn(self.x['quit'], self.y['quit'], self.width['quit'], self.height['quit']) and isPressed(1) then
         love.event.quit()
