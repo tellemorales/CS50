@@ -21,7 +21,7 @@ function Board:initialize(lvl)
             local count = math.random(1, math.min(3, self.lvl))
             local color = math.min(math.random(1, 9 * self.lvl), math.random(36))
             local t = Tile(tX, tY, color, count)
-            if math.random(shinyChance = 1) and self.lvl >= 4 then
+            if math.random(shinyChance == 1) and self.lvl >= 4 then
                 t.shiny = true
             end
             table.insert(self.tiles[tY], t)
