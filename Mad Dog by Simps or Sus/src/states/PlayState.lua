@@ -112,7 +112,7 @@ function PlayState:render()
     local mx, my = push:toGame(love.mouse.getPosition())
     local mgx, mgy = math.floor((mouseX-self.board.x)/200)+1, math.floor((mouseY-self.board.y)/200)+1
 
-    local inside = mouseGY > 0 and mouseGX > 0 and mouseGY < 6 and mouseGX < 6
+    local inside = mgy > 0 and mgx > 0 and mgy < 6 and mgx < 6
     if inside then
         love.graphics.setLineWidth(4)
         love.graphics.rectangle('line', ((mgx-1) * 200) + 720,
