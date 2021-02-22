@@ -10,10 +10,10 @@ function Board:init(x, y, lvl)
     self.checking = false
     self.reset = false
 
-    self.initialize(self.lvl)
+    self.initialize()
 end
 
-function Board:initialize(lvl)
+function Board:initialize()
     self.tiles = {}
     for tY = 1, 5 do
         table.insert(self.tiles, {})
@@ -29,7 +29,7 @@ function Board:initialize(lvl)
     end
 
     while self:calculatematch() do
-        self.initialize(self.lvl)
+        self.initialize()
     end
 end
 
