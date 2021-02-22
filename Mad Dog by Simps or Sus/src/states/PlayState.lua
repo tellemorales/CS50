@@ -4,7 +4,7 @@ function PlayState:init()
     self.ht = nil
     self.score = 0
     self.timer = 120
-    self.board = Board(VIRTUAL_WIDTH, 720, 40)
+    self.board = Board(720, 40, 1)
     self.score = 0
     self.scoregoal = 500 + (self.board.lvl * 500)
     Timer.every(1, function()
