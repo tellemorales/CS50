@@ -106,10 +106,6 @@ function isPressed(key)
     return globalInput[key]
 end
 
-function love.mouse.wasClicked(key)
-    return love.mouse.buttonsClicked[key]
-end
-
 function love.draw()
     push:start()
 
