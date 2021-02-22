@@ -55,6 +55,7 @@ function love.load()
     love.keyboard.keysPressed = {}
     
     globalInput = {}
+    love.mouse.buttonsClicked = {}
 
     -- create a global mouse x y table
     currentMousePos = {["x"] = nil, ["y"] = nil}
@@ -69,13 +70,6 @@ function love.mouseIn(x, y, width, height)
             return false
     end
 end
-
-
-
-function love.resize(w, h)
-    push:resize(w, h)
-end
-
 
 function love.update(dt)
     -- gather the current x y of mouse
@@ -106,12 +100,16 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     globalInput[button] = true
-
+    love.mouse.buttonsClicked[key] = true
 end
 
 
 function isPressed(key)
     return globalInput[key]
+end
+
+function love.mouse.wasClicked(key)
+    return love.mouse.buttonsClicked[key]
 end
 
 function love.draw()
