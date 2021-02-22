@@ -38,7 +38,7 @@ function EnterHighScoreState:update(dt)
     --change this to a different file name/create a file
         love.filesystem.write('maddog.lst', scoresStr)
 
-        gStateMachine:change('high-scores', {
+        gStateMachine:change('highscore', {
             highScores = self.highScores
         })
     end

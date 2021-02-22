@@ -2,6 +2,12 @@
 StartState = Class{__includes = BaseState}
 -- whether we're highlighting "Start" or "High Scores"
 
+
+function StartState:enter(params)
+    self.highScores = params.highScores
+end
+
+
 function StartState:init()
     self.button = {
         ['play'] = love.graphics.newQuad(0, 220 , 285, 110, gTextures['main_men']:getDimensions()),
@@ -58,11 +64,13 @@ function StartState:update(dt)
         gStateMachine:change('play')
         
     elseif love.mouseIn(self.x['option'], self.y['option'], self.width['option'], self.height['option']) and isPressed(1) then
-        gStateMachine:change('option')
+        gStateMachine:change('option', {
+            highScores = self.highScores
+        })
 
     elseif love.mouseIn(self.x['highscore'], self.y['highscore'], self.width['highscore'], self.height['highscore']) and isPressed(1) then
         gStateMachine:change('highscore', {
-            highScore = self.highScore
+            highScores = self.highScores
         })
 
     elseif love.mouseIn(self.x['quit'], self.y['quit'], self.width['quit'], self.height['quit']) and isPressed(1) then

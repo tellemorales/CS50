@@ -46,10 +46,11 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['option'] = function() return OptionState() end,
         ['rules'] = function() return RuleState() end,
-        ['highscore'] = function() return HighScoreState() end
+        ['highscore'] = function() return HighScoreState() end,
+        ['enter score'] = function() return EnterHighScoreState() end
     }
     gStateMachine:change("start", {
-        highScore = loadScores()
+        highScores = loadHighScores()
     })
 
     love.keyboard.keysPressed = {}
@@ -133,14 +134,14 @@ function love.draw()
     push:finish()
 end
 
-function loadScores()
+function loadHighScores()
     love.filesystem.setIdentity('maddog')
 
     -- if the file doesn't exist, initialize it with some default scores
-    if not love.filesystem.getInfo('maddogt.lst') == nil then
+    if not love.filesystem.getInfo('maddog.lst') == nil then
         local scores = ''
         for i = 10, 1, -1 do
-            scores = scores .. 'CTO\n'
+            scores = scores .. 'MDG\n'
             scores = scores .. tostring(i * 1000) .. '\n'
         end
 
@@ -177,4 +178,7 @@ function loadScores()
     end
 
     return scores
+
+    
 end
+

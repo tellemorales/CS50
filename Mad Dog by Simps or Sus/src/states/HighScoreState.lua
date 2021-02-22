@@ -1,43 +1,54 @@
 HighScoreState = Class{__includes = BaseState}
 
 function HighScoreState:enter(params)
-    self.highScore = params.highScore
+    self.highScores = params.highScores
 end
 
+
+
 function HighScoreState:update(dt)
+    -- return to the start screen if we press escape
     if love.keyboard.wasPressed('escape') then
         gStateMachine:change('start', {
-            highScore = self.highScore
+            highScores = self.highScores
         })
     end
 end
 
 function HighScoreState:render()
-    love.graphics.setFont(gFonts['large'])
+    love.graphics.setFont(gFonts['XXXLarge'])
+    love.graphics.setColor(0.64, 0.48, 0)
     love.graphics.printf('High Scores', 0, 20, VIRTUAL_WIDTH, 'center')
 
-    love.graphics.setFont(gFonts['medium'])
-
+    love.graphics.setColor(1, 1, 0)
+    -- iterate over all high score indices in our high scores table
     for i = 1, 10 do
-        local name = self.highScore[i].name or '---'
-        local score = self.highScore[i].score or '---'
+        local name = self.highScores[i].name or '---'
+        local score = self.highScores[i].score or '---'
 
         -- score number (1-10)
-        love.graphics.printf(tostring(i) .. '.', VIRTUAL_WIDTH / 4, 
-            60 + i * 13, 50, 'left')
+        love.graphics.setColor(0.64, 0.48, 0)
+        love.graphics.setFont(gFonts['numfont'])
+        love.graphics.printf(tostring(i) .. '.', VIRTUAL_WIDTH / 4 + 119, 
+            60 + i * 79, 260, 'left')
 
         -- score name
-        love.graphics.printf(name, VIRTUAL_WIDTH / 4 + 38, 
-            60 + i * 13, 50, 'right')
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.setFont(gFonts['XXLarge'])
+        love.graphics.printf(name, VIRTUAL_WIDTH / 4 + 75, 
+            60 + i * 81, 260, 'right')
         
         -- score itself
-        love.graphics.printf(tostring(score), VIRTUAL_WIDTH / 2,
-            60 + i * 13, 100, 'right')
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.setFont(gFonts['numfont'])
+        love.graphics.printf(tostring(score), VIRTUAL_WIDTH / 2 + 70,
+            60 + i * 80, 260, 'right')
     end
+    
 
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.printf("Press Escape to return to the main menu!",
-        0, VIRTUAL_HEIGHT - 18, VIRTUAL_WIDTH, 'center')
+    love.graphics.setFont(gFonts['XLarge'])
+    love.graphics.setColor(0.64, 0.48, 0)
+    love.graphics.printf("Press ESC key to return",
+        -20, VIRTUAL_HEIGHT - 100, 2000, 'center')
+
 end
-
---pano ilagay yung button help

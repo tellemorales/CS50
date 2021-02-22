@@ -56,7 +56,8 @@ gFonts = {
     ['large'] = love.graphics.newFont('fonts/main.ttf', 32),
     ['XLarge'] = love.graphics.newFont('fonts/main.ttf', 48),
     ['XXLarge'] = love.graphics.newFont('fonts/main.ttf', 64),
-    ['XXXLarge'] = love.graphics.newFont('fonts/main.ttf', 94)
+    ['XXXLarge'] = love.graphics.newFont('fonts/main.ttf', 94),
+    ['numfont'] = love.graphics.newFont('fonts/number.ttf', 66)
 }
 
 -- initialize sounds

@@ -2,6 +2,10 @@ selected = 1
 page = 1
 RuleState = Class{__includes = BaseState}
 
+function RuleState:enter(params)
+    self.highScores = params.highScores
+end
+
 function RuleState:init()
 
     self.x = {
@@ -31,7 +35,9 @@ function RuleState:update(dt)
     end
 
     if page == 0 then 
-        gStateMachine:change('option')
+        gStateMachine:change('option', {
+            highScores = self.highScores
+        })
     end
          
 end

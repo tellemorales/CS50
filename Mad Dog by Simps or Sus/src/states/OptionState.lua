@@ -6,6 +6,10 @@ pos_rec = 1268
 
 OptionState = Class{__includes = BaseState}
 
+function OptionState:enter(params)
+    self.highScores = params.highScores
+end
+
 
 function OptionState:init()
 
@@ -61,12 +65,16 @@ end
 function OptionState:update(dt)
 
     if love.mouseIn(self.x['return'], self.y['return'], self.width['return'], self.height['return']) and isPressed(1) then
-        gStateMachine:change('start')
+        gStateMachine:change('start', {
+          highScores = self.highScores
+        })
     end
 
     if love.mouseIn(self.x['right_arrow'], self.y['right_arrow'], self.width['arrow'], self.height['arrow']) and isPressed(1) then
         page = 1
-        gStateMachine:change('rules')
+        gStateMachine:change('rules', {
+            highScores = self.highScores
+        })
     end
 
     if love.mouse.isDown(1) then
