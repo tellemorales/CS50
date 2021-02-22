@@ -23,6 +23,8 @@ require 'src/states/RuleState'
 require 'src/states/EnterHighScoreState'
 require 'src/states/HighScoreState'
 require 'src/Util'
+require 'src/Board'
+require 'src/Tile'
 
 
 -- Initialize png's

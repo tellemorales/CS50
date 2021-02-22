@@ -71,13 +71,6 @@ function love.mouseIn(x, y, width, height)
     end
 end
 
-
-
-function love.resize(w, h)
-    push:resize(w, h)
-end
-
-
 function love.update(dt)
     -- gather the current x y of mouse
     x, y = love.mouse.getPosition()
@@ -107,7 +100,6 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     globalInput[button] = true
-
 end
 
 

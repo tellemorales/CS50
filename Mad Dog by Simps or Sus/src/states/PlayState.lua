@@ -3,37 +3,63 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.ht = nil
     self.score = 0
-    self.timer = 60
-    self.caninput = true
-
-    Timer.every(1, function() 
+    self.timer = 120
+    self.board = Board(720, 40, 1)
+    self.score = 0
+    self.scoregoal = 500 + (self.board.lvl * 500)
+    Timer.every(1, function()
         self.timer = self.timer - 1
-    end)
-end
-
-function PlayState:enter(params)
-    self.lvl = params.lvl
-    self.board = params.board or Board(VIRTUAL_WIDTH, 100, self.lvl)
-    self.score = params.score or 0
-    self.scoregoal = self.lvl * 1.25 * 1000
+    )
 end
 
 function PlayState:update(dt)
     if self.timer <= 0 then
         Timer.clear()
-
-        -- change to game over state
+        gStateMachine:change()
     end
 
     if self.score >= self.scoregoal then
-        self.timer = 60
+        self.timer = 120
         self.board.lvl = self.board.lvl + 1
     end
 
-    if self.ht then
-        self:mouseselect()
-    else
-        self:mousehighlight()
+    local mouseX, mouseY = push:toGame(love.mouse.getPosition())
+    local mouseGX, mouseGY = math.floor((mouseX-self.board.x)/200)+1, math.floor((mouseY-self.board.y)/200)+1
+
+    local inside = mouseGY > 0 and mouseGX > 0 and mouseGY < 6 and mouseGX < 6
+
+    if inside then
+        if isPressed(1) then
+            if not self.ht then
+                self.ht = self.board.tiles[mouseGY][mouseGX]
+            elseif self.ht = self.board.tiles[mouseGY][mouseGX] then
+                self.ht = nil
+            elseif math.abs(mouseGX-self.ht.gx) + math.abs(mouseGY-self.ht.gy) > 1
+                self.ht = nil
+            else
+                local tx = self.ht.gx
+                local ty = self.ht.gy
+
+                local nt = self.board.tiles[mouseGY][mouseGX]
+
+                self.ht.gx = nt.gx
+                self.ht.gy = nt.gy
+                nt.gx = tx
+                nt.gy = ty
+
+                self.board.tiles[self.ht.gy][self.ht.gx] = self.ht
+                self.board.tiles[nt.gy][nt.gy] = nt
+
+                Timer.tween(0.1, {
+                    [self.ht] = {x = nt.x, y = nt.y},
+                    [nt] = {x = self.ht.x, y = self.ht.y}
+                }):finish(
+                    function ()
+                        self:calculate()
+                    end
+                )
+            end
+        end        
     end
 
     Timer.update(dt)
@@ -48,13 +74,13 @@ function PlayState:calculate()
         for a, match in pairs(matches) do
             for b, tile in pairs(match) do
                 if tile.shiny then
-                    self.score = self.score + (tile.count * 10) * 2
+                    self.score = self.score + (tile.count * 20)
+                    self.timer = math.min(120, self.timer + 2)
                 else
-                    self.score = self.score + tile.count * 10
+                    self.score = self.score + (tile.count * 10)
+                    self.timer = math.min(120, self.timer + 1)
                 end
             end
-            self.score = self.score + #match * 50
-            self.timer = self.timer + 1
         end
 
         self.board:removematch()
@@ -69,53 +95,27 @@ function PlayState:calculate()
     end
 end
 
-function PlayState:mousehighlight()
-    local mx, my = push:toGame(love.mouse.getPosition())
+function PlayState:render()
+    self.board:render()
 
-    local mgx = math.floor((mx - self.board.x)/200) + 1
-    local mgy = math.floor((my - self.board.y)/200) + 1
-
-    if mgx > 0 and mgy > 0 and mgx < 9 and mgy < 9 then
-        if love.mouse.wasClicked(1) then
-            if not self.ht then
-                self.ht = self.board.tiles[mgy][mgx]
-            end
-        end
+    if self.ht then
+        love.graphics.setBlendMode('add')
+        love.graphics.setColor(1, 1, 1, 96/255)
+        love.graphics.rectangle('fill', ((self.ht.gx - 1) * 200) + 720,
+            ((self.ht.gy - 1) * 200) + 40)
+        love.graphics.setBlendMode('alpha')
     end
-end
 
-function PlayState:mouseselect()
-    local hx = self.ht.gx
-    local hy = self.ht.gy
+    love.graphics.setColor(217/255, 87/255, 99/255, 1)
+
 
     local mx, my = push:toGame(love.mouse.getPosition())
-    local mgx, mgy = math.floor((mx - self.board.x )/200) + 1, math.floor((my - self.board.y)/200) + 1
+    local mgx, mgy = math.floor((mouseX-self.board.x)/200)+1, math.floor((mouseY-self.board.y)/200)+1
 
-    if love.mouse.wasClicked(1) and (hx > 0 and hy > 0 and hx < 6 and hy < 6) then
-        if math.abs(mgx-hx) + math.abs(mgy-hy) <= 1 then
-            local tx = self.ht.gx
-            local ty = self.ht.gy
-
-            local nt = self.board.tiles[mgy][mgy]
-
-            self.ht.gx = nt.gx
-            self.ht.gy = nt.gy
-            nt.gx = tx
-            nt.gy = ty
-
-            self.board.tiles[self.ht.gy][self.ht.gx] = self.ht
-            self.board.tiles[nt.gy][nt.gy] = nt
-
-            Timer.tween(0.1, {
-                [th] = {x = ts.x, y = ts.y},
-                [ts] = {x = th.x, y = th.y}
-            }):finish(
-                function ()
-                    self:calculate()
-                end
-            )
-        else
-            self.ht = nil
-        end
+    local inside = mgy > 0 and mgx > 0 and mgy < 6 and mgx < 6
+    if inside then
+        love.graphics.setLineWidth(4)
+        love.graphics.rectangle('line', ((mgx-1) * 200) + 720,
+        ((mgy-1) * 200) + 40)
     end
 end

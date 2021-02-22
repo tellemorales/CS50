@@ -1,35 +1,58 @@
+--[[
+    GD50
+    Match-3 Remake
 
+    -- StartState Class --
+
+    Author: Colton Ogden
+    cogden@cs50.harvard.edu
+
+    Helper functions for writing Match-3.
+]]
+
+--[[
+    Given an "atlas" (a texture with multiple sprites), generate all of the
+    quads for the different tiles therein, divided into tables for each set
+    of tiles, since each color has 6 varieties.
+]]
 function GenerateTileQuads(atlas)
     local tiles = {}
-
-
     local x = 0
     local y = 0
-
     local counter = 1
-    -- 9 rows of tiles
-    for row = 1, 9 do
-        
-        -- two sets of 6 cols, different tile varietes
-        for i = 1, 2 do
+    for pack = 1, 4 do
+        for column = 1, 9 do
             tiles[counter] = {}
-            
-            for col = 1, 6 do
-                table.insert(tiles[counter], love.graphics.newQuad(
-                    x, y, 32, 32, atlas:getDimensions()
-                ))
-                x = x + 32
+            for row = 1, 3 do
+                table.insert(tiles[counter], love.graphics.newQuad(x, y, 200, 200, atlas:getDimensions()))
+                y = y + 200
             end
-
             counter = counter + 1
+            x = x + 200
+            y = y - 600
         end
-        y = y + 32
+        y = y + 600
         x = 0
     end
-
     return tiles
 end
 
+function GenerateQuadsMainButtons(atlas)
+    local xbutton = 0
+    local ybutton = 0
+
+    local counters = 1
+    local main_button = {}
+
+        --play
+        main_button[counters] = love.graphics.newQuad(xbutton, ybutton, 769, 110,
+            atlas:getDimensions())
+        counters = counters + 1
+
+    
+
+    return main_button
+end
 
 --[[
     Recursive table printing function.
