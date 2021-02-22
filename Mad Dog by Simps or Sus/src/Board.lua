@@ -5,7 +5,6 @@ shinyChance = 10
 function Board:init(x, y, lvl)
     self.x = x
     self.y = y
-    self.tiles = {}
     self.matches = {}
     self.lvl = lvl
     self.checking = false
@@ -15,6 +14,7 @@ function Board:init(x, y, lvl)
 end
 
 function Board:initialize(lvl)
+    self.tiles = {}
     for tY = 1, 5 do
         table.insert(self.tiles, {})
         for tX = 1, 5 do
