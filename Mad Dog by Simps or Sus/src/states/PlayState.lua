@@ -29,7 +29,7 @@ function PlayState:update(dt)
     local inside = mouseGY > 0 and mouseGX > 0 and mouseGY < 6 and mouseGX < 6
 
     if inside then
-        if love.mouse.wasClicked(1) then
+        if isPressed(1) then
             if not self.ht then
                 self.ht = self.board.tiles[mouseGY][mouseGX]
             elseif self.ht = self.board.tiles[mouseGY][mouseGX] then
