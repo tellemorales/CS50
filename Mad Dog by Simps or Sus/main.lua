@@ -55,7 +55,6 @@ function love.load()
     love.keyboard.keysPressed = {}
     
     globalInput = {}
-    love.mouse.buttonsClicked = {}
 
     -- create a global mouse x y table
     currentMousePos = {["x"] = nil, ["y"] = nil}
@@ -100,7 +99,6 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     globalInput[button] = true
-    love.mouse.buttonsClicked[key] = true
 end
 
 
