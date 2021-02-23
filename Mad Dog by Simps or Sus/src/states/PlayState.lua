@@ -9,7 +9,7 @@ function PlayState:init()
     self.scoregoal = 500 + (self.board.lvl * 500)
     Timer.every(1, function()
         self.timer = self.timer - 1
-    )
+    end)
 end
 
 function PlayState:update(dt)
@@ -32,9 +32,9 @@ function PlayState:update(dt)
         if isPressed(1) then
             if not self.ht then
                 self.ht = self.board.tiles[mouseGY][mouseGX]
-            elseif self.ht = self.board.tiles[mouseGY][mouseGX] then
+            elseif self.ht == self.board.tiles[mouseGY][mouseGX] then
                 self.ht = nil
-            elseif math.abs(mouseGX-self.ht.gx) + math.abs(mouseGY-self.ht.gy) > 1
+            elseif math.abs(mouseGX-self.ht.gx) + math.abs(mouseGY-self.ht.gy) > 1 then
                 self.ht = nil
             else
                 local tx = self.ht.gx

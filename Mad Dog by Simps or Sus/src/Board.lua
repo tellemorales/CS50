@@ -175,7 +175,7 @@ function Board:gettiles()
                 local color = math.min(math.random(1, 9 * self.lvl), math.random(36))
                 local t = Tile(tX, tY, color, count)
                 t.y = -200
-                if math.random(shinyChance = 1) and self.lvl >= 4 then
+                if math.random(shinyChance == 1) and self.lvl >= 4 then
                     t.shiny = true
                 end
 
