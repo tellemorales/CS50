@@ -1,14 +1,3 @@
---[[
-    GD50
-    Match-3 Remake
-
-    -- StartState Class --
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-
-    Helper functions for writing Match-3.
-]]
 
 --[[
     Given an "atlas" (a texture with multiple sprites), generate all of the
