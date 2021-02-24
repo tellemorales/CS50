@@ -9,8 +9,8 @@
 ]] --
 
 -- global input for values
-selected = 1
-local page = 1
+local selected = 1
+page = 1
 RuleState = Class{__includes = BaseState}
 
 function RuleState:enter(params)
