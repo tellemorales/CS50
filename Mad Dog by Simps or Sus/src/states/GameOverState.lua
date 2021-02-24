@@ -1,3 +1,13 @@
+--[[
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- GameOverState--
+
+    NOTE: All CAPS are considered constants
+]] --
+
 GameOverState = Class{__includes = BaseState}
 
 
@@ -7,6 +17,8 @@ function GameOverState:enter(params)
 end
 
 function GameOverState:update(dt)
+
+    -- if enter was pressed check if it is greater than the saved highscore
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         local highScore = false
 
@@ -21,12 +33,14 @@ function GameOverState:update(dt)
         end
 
         if highScore then
+            --change to enter highscore state
             gStateMachine:change('enter highscore', {
                 highScores = self.highScores,
                 gamescore = self.score,
                 scoreIndex = HSIndex
             })
         else 
+            -- change to start menu
             gStateMachine:change('start', {
                 highScores = self.highScores
             })
@@ -52,14 +66,12 @@ function GameOverState:render()
     -- rotation
      0,
     -- size 
-     1.8, 1.8,
-    -- fiter
-     love.graphics.setDefaultFilter("nearest", "nearest")
+     1.8, 1.8
     )
 
 
 
-
+    -- render text 
     love.graphics.setColor(1,0,0)
     love.graphics.setFont(gFonts['Giant'])
     love.graphics.printf('GAME OVER!', VIRTUAL_WIDTH / 2 - 1000, 430, 2000, 'center')

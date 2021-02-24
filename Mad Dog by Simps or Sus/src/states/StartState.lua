@@ -56,33 +56,28 @@ end
 
 function StartState:update(dt)
 
-    if isPressed(key) then  
-        gSounds['select']:play()
-    end
-
     if love.mouseIn(self.x['play'], self.y['play'], self.width['play'], self.height['play']) and isPressed(1) then
         gStateMachine:change('play', {
             highScores = self.highScores
         })
+        gSounds['select']:play()
         
     elseif love.mouseIn(self.x['option'], self.y['option'], self.width['option'], self.height['option']) and isPressed(1) then
         gStateMachine:change('option', {
             highScores = self.highScores
         })
+        gSounds['select']:play()
 
     elseif love.mouseIn(self.x['highscore'], self.y['highscore'], self.width['highscore'], self.height['highscore']) and isPressed(1) then
         gStateMachine:change('highscore', {
             highScores = self.highScores
         })
+        gSounds['select']:play()
 
     elseif love.mouseIn(self.x['quit'], self.y['quit'], self.width['quit'], self.height['quit']) and isPressed(1) then
         love.event.quit()
     end
 
-    -- we no longer have this globally, so include here
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
 end
 
 

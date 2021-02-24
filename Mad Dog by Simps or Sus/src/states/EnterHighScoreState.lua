@@ -28,6 +28,7 @@ function EnterHighScoreState:enter(params)
 end
 
 function EnterHighScoreState:update(dt)
+
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         local name = string.char(chars[1] .. string.char(chars[2]) .. string.char(chars[3]))
 
@@ -112,6 +113,8 @@ function EnterHighScoreState:render()
     love.graphics.printf('Your score: ' .. tostring(self.score), 0, 300, VIRTUAL_WIDTH , 'center')
     
     love.graphics.setFont(gFonts['XXXLarge'])
+
+    -- identify if mouse hovers to button dimension using aabb collision
     
     if love.mouseIn(self.x[1], self.y['up'], self.width, self.height) then
         love.graphics.draw(gTextures['selected_up_arrow'], self.x[1], self.y['up'], 0, 0.084, 0.084)

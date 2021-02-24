@@ -1,9 +1,12 @@
-
 --[[
-    Given an "atlas" (a texture with multiple sprites), generate all of the
-    quads for the different tiles therein, divided into tables for each set
-    of tiles, since each color has 6 varieties.
-]]
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- Util --
+
+    NOTE: All CAPS are considered constants
+]] --
 function GenerateTileQuads(atlas)
     local tiles = {}
     local x = 0

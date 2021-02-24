@@ -1,3 +1,13 @@
+--[[
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- PlayState --
+
+    NOTE: All CAPS are considered constants
+]] --
+
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init()

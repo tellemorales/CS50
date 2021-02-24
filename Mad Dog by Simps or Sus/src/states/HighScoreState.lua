@@ -1,3 +1,13 @@
+--[[
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- HighScoreState --
+
+    NOTE: All CAPS are considered constants
+]] --
+
 HighScoreState = Class{__includes = BaseState}
 
 function HighScoreState:enter(params)

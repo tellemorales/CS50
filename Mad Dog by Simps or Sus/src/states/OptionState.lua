@@ -1,8 +1,20 @@
+--[[
+    Mad Dog Game
 
-game_vol = 1
-RECT_SPEED = 200
+    Author: Simps or Sus
+
+    -- OptionState --
+
+    NOTE: All CAPS are considered constants
+]] --
+
+-- value of game volume set to default
+local game_vol = 1
+
+-- rectangle speed 
+local RECT_SPEED = 200
 -- position of rectangle that adjusts the volume in terms of x
-pos_rec = 1268
+local pos_rec = 1268
 
 OptionState = Class{__includes = BaseState}
 
@@ -17,8 +29,7 @@ function OptionState:init()
     self.buttons = {
         ['return'] = love.graphics.newQuad(0, 0, 512, 91, gTextures['option_menu']:getDimensions()),
         ['selected_return'] = love.graphics.newQuad(0, 91, 512, 91, gTextures['option_menu']:getDimensions())
-    }
-    vol_adjust_value = (1 + 0) / 56 
+    } 
 
     self.x = {
         ['return'] = (VIRTUAL_WIDTH / 2) - 190,
@@ -64,10 +75,14 @@ end
 
 function OptionState:update(dt)
 
+    -- value to be deduced per decrement of speed of the rectangle
+    local vol_adjust_value = (1 + 0) / 56
+
     if love.mouseIn(self.x['return'], self.y['return'], self.width['return'], self.height['return']) and isPressed(1) then
         gStateMachine:change('start', {
           highScores = self.highScores
         })
+        gSounds['select']:play()
     end
 
     if love.mouseIn(self.x['right_arrow'], self.y['right_arrow'], self.width['arrow'], self.height['arrow']) and isPressed(1) then
@@ -75,6 +90,7 @@ function OptionState:update(dt)
         gStateMachine:change('rules', {
             highScores = self.highScores
         })
+        gSounds['select']:play()
     end
 
     if love.mouse.isDown(1) then
@@ -116,7 +132,8 @@ function OptionState:render()
         love.graphics.draw(gTextures['selected_right_arrow'], self.x['right_arrow'] , self.y['right_arrow'], 0, .300, .270)
     end
          
-    
+
+    -- render text
     love.graphics.setColor(56, 56, 56, 234)
     musicX = love.graphics.rectangle('fill', 930, 452, 348, 8, 4)
 

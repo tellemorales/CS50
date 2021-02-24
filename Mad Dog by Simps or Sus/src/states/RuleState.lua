@@ -1,5 +1,16 @@
+--[[
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- RuleState --
+
+    NOTE: All CAPS are considered constants
+]] --
+
+-- global input for values
 selected = 1
-page = 1
+local page = 1
 RuleState = Class{__includes = BaseState}
 
 function RuleState:enter(params)
@@ -8,6 +19,7 @@ end
 
 function RuleState:init()
 
+    
     self.x = {
         ['left'] =  (VIRTUAL_WIDTH / 2) - 340,
         ['right'] =  (VIRTUAL_WIDTH / 2) + 280
@@ -28,9 +40,11 @@ function RuleState:update(dt)
         
     if  love.mouseIn(self.x['right'], self.y['right'], self.width, self.height) and isPressed(1) then
         page = math.min(4, page + 1) 
+        gSounds['select']:play()
 
     elseif love.mouseIn(self.x['left'], self.y['left'], self.width, self.height) and isPressed(1) then
         page = math.max(0, page - 1) 
+        gSounds['select']:play()
 
     end
 

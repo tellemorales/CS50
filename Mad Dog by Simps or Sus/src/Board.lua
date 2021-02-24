@@ -1,3 +1,12 @@
+--[[
+    Mad Dog Game
+
+    Author: Simps or Sus
+
+    -- Board --
+
+    NOTE: All CAPS are considered constants
+]] --
 Board = Class{}
 
 shinyChance = 10
