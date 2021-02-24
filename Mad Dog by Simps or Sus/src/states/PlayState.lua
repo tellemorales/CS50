@@ -153,7 +153,7 @@ function PlayState:render()
 
     love.graphics.setColor(1,1,1,1)
 
-    love.graphics.setFont(gFonts.elarge)
+    love.graphics.setFont(gFonts.XXLarge)
     love.graphics.print("SCORE: ", 235, 300)
     love.graphics.print("GOAL: ", 235, 375)
     love.graphics.print("TIME: ", 235, 450)
