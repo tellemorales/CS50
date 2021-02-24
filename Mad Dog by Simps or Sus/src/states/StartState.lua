@@ -61,7 +61,9 @@ function StartState:update(dt)
     end
 
     if love.mouseIn(self.x['play'], self.y['play'], self.width['play'], self.height['play']) and isPressed(1) then
-        gStateMachine:change('play')
+        gStateMachine:change('play', {
+            highScores = self.highScores
+        })
         
     elseif love.mouseIn(self.x['option'], self.y['option'], self.width['option'], self.height['option']) and isPressed(1) then
         gStateMachine:change('option', {

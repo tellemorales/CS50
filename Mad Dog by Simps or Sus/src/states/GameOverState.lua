@@ -1,16 +1,36 @@
 GameOverState = Class{__includes = BaseState}
 
-function GameOverState:init()
-
-end
 
 function GameOverState:enter(params)
-    self.score = params.score 
+    self.score = params.score
+    self.highScores = params.highScores
 end
 
 function GameOverState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('start')
+        local highScore = false
+
+        local scoreIndex = 11
+
+        for i = 10, 1, -1 do 
+            local gamescore = self.highScores[i].score or 0 
+            if self.score > gamescore then
+                HSIndex = isPressed
+                highScore = true
+            end
+        end
+
+        if highScore then
+            gStateMachine:change('enter highscore', {
+                highScores = self.highScores,
+                gamescore = self.score,
+                scoreIndex = HSIndex
+            })
+        else 
+            gStateMachine:change('start', {
+                highScores = self.highScores
+            })
+        end
     end
 end
 
@@ -19,14 +39,33 @@ function GameOverState:render()
     love.graphics.setFont(gFonts['large'])
 
     love.graphics.setColor(0, 0, 0, 255)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 64 , 64, 128, 136, 4)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 + 200 , 64, 128, 136, 4)
 
-    love.graphics.draw(gTextures['background'], backgroundX, 0)
+    love.graphics.draw(gTextures['background'], 0, 0)
 
-    love.graphics.setColor(99, 155, 255, 255)
-    love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 64, 64, 128, 'center')
-    love.graphics.setFont(gFonts['medium'])
-    love.graphics.printf('Your Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 64, 140, 128, 'center')
-    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 64, 180, 128, 'center')
+    love.graphics.setColor(1, 1, 1, 0.10)
+    love.graphics.draw(gTextures['mad_dog'],
+    -- x - axis
+     (VIRTUAL_WIDTH / 2) - 525,
+    -- y - axis
+     (VIRTUAL_HEIGHT / 2) - 600,
+    -- rotation
+     0,
+    -- size 
+     1.8, 1.8,
+    -- fiter
+     love.graphics.setDefaultFilter("nearest", "nearest")
+    )
+
+
+
+
+    love.graphics.setColor(1,0,0)
+    love.graphics.setFont(gFonts['Giant'])
+    love.graphics.printf('GAME OVER!', VIRTUAL_WIDTH / 2 - 1000, 430, 2000, 'center')
+    love.graphics.setColor(1,1,1)
+    love.graphics.setFont(gFonts['XLarge'])
+    love.graphics.printf('Your Final Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 250, 650, 500, 'center')
+    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 250, 750, 500, 'center')
 
 end

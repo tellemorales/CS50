@@ -22,14 +22,17 @@ require 'src/states/OptionState'
 require 'src/states/RuleState'
 require 'src/states/EnterHighScoreState'
 require 'src/states/HighScoreState'
+require 'src/states/GameOverState'
 require 'src/Util'
 require 'src/Board'
 require 'src/Tile'
 
 
+
 -- Initialize png's
 gTextures = {
     ['background'] = love.graphics.newImage('graphics/background.png'),
+    ['mad_dog'] = love.graphics.newImage('graphics/mad_dog.png'),
     ['menu'] = love.graphics.newImage('graphics/main_menu.png'),
     ['pause'] = love.graphics.newImage('graphics/pause.png'),
     ['main_men'] = love.graphics.newImage('graphics/main_buttons.png'),
@@ -63,12 +66,13 @@ gFonts = {
     ['XLarge'] = love.graphics.newFont('fonts/main.ttf', 48),
     ['XXLarge'] = love.graphics.newFont('fonts/main.ttf', 64),
     ['XXXLarge'] = love.graphics.newFont('fonts/main.ttf', 94),
+    ['Giant'] = love.graphics.newFont('fonts/main.ttf', 128),
     ['numfont'] = love.graphics.newFont('fonts/number.ttf', 66)
 }
 
 -- initialize sounds
 gSounds = {
-    ['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
+    ['music'] = love.audio.newSource('sounds/music.mp3', 'stream'),
     ['snore'] = love.audio.newSource('sounds/snore.mp3', 'static'),
     ['growl'] = love.audio.newSource('sounds/growl.mp3', 'static'),
     ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),

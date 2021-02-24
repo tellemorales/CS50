@@ -47,7 +47,9 @@ function love.load()
         ['option'] = function() return OptionState() end,
         ['rules'] = function() return RuleState() end,
         ['highscore'] = function() return HighScoreState() end,
-        ['enter highscore'] = function() return EnterHighScoreState() end
+        ['enter highscore'] = function() return EnterHighScoreState() end,
+        ['gameover'] = function() return GameOverState() end
+
     }
     gStateMachine:change("start", {
         highScores = loadHighScores()
