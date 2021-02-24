@@ -54,7 +54,9 @@ gTextures = {
     ['selected_up_arrow'] = love.graphics.newImage('graphics/up_arrow_selected.png'),
     ['down_arrow'] = love.graphics.newImage('graphics/down_arrow.png'),
     ['selected_down_arrow'] = love.graphics.newImage('graphics/down_arrow_selected.png'),
-    ['rules'] = love.graphics.newImage('graphics/title_rule.png')
+    ['rules'] = love.graphics.newImage('graphics/title_rule.png'),
+    ['double'] = love.graphics.newImage('graphics/tile_x2.png'),
+    ['levels'] = love.graphics.newImage('graphics/levels.png'),
 }
 
 -- initialize fonts
@@ -82,5 +84,6 @@ gSounds = {
 
 gFrames = {
     ['tiles'] = GenerateTileQuads(gTextures['bone']),
+    ['levels'] = GenerateLevel(gTextures['levels']),
 }
 
