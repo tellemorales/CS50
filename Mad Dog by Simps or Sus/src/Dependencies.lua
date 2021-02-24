@@ -47,6 +47,10 @@ gTextures = {
     ['selected_left_arrow'] = love.graphics.newImage('graphics/selected_left_arrow.png'),
     ['right_arrow'] = love.graphics.newImage('graphics/right_arrow.png'),
     ['selected_right_arrow'] = love.graphics.newImage('graphics/selected_right_arrow.png'),
+    ['up_arrow'] = love.graphics.newImage('graphics/up_arrow.png'),
+    ['selected_up_arrow'] = love.graphics.newImage('graphics/up_arrow_selected.png'),
+    ['down_arrow'] = love.graphics.newImage('graphics/down_arrow.png'),
+    ['selected_down_arrow'] = love.graphics.newImage('graphics/down_arrow_selected.png'),
     ['rules'] = love.graphics.newImage('graphics/title_rule.png')
 }
 
