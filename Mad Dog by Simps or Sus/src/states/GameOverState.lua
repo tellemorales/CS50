@@ -27,7 +27,7 @@ function GameOverState:update(dt)
         for i = 10, 1, -1 do 
             local gamescore = self.highScores[i].score or 0 
             if self.score > gamescore then
-                HSIndex = isPressed
+                highScoreIndex = i
                 highScore = true
             end
         end
@@ -37,7 +37,7 @@ function GameOverState:update(dt)
             gStateMachine:change('enter highscore', {
                 highScores = self.highScores,
                 gamescore = self.score,
-                scoreIndex = HSIndex
+                scoreIndex = highScoreIndex
             })
         else 
             -- change to start menu

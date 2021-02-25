@@ -42,6 +42,10 @@ function PlayState:init()
     self.scoregoal = 300
     Timer.every(1, function()
         self.timer = self.timer - 1
+
+        if self.timer <= 10 then
+            gSounds['timer']:play()
+        end
     end)
     isPause = false
 end
@@ -66,6 +70,7 @@ function PlayState:update(dt)
                 highScores = self.highScores,
                 gamescore = self.score
             })
+            gSounds['timer']:pause()
             gSounds['gameover']:play()
             gSounds['music']:pause()
         end
@@ -75,7 +80,7 @@ function PlayState:update(dt)
 
             gSounds['levelup']:play()
 
-            if self.board.level < 5 then        
+            if self.board.level < 5 then  
                 self.timer = 120 * (self.board.level + 1)
                 self.board.level = self.board.level + 1
             end        

@@ -57,6 +57,7 @@ gTextures = {
     ['rules'] = love.graphics.newImage('graphics/title_rule.png'),
     ['double'] = love.graphics.newImage('graphics/tile_x2.png'),
     ['levels'] = love.graphics.newImage('graphics/levels.png'),
+    ['sample'] = love.graphics.newImage('graphics/sample.png')
 }
 
 -- initialize fonts
@@ -81,7 +82,8 @@ gSounds = {
     ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
     ['select'] = love.audio.newSource('sounds/select.wav', 'static'),
     ['gameover'] = love.audio.newSource('sounds/game_over.mp3', 'static'),
-    ['levelup'] = love.audio.newSource('sounds/level_up.mp3', 'static')
+    ['levelup'] = love.audio.newSource('sounds/level_up.mp3', 'static'),
+    ['timer'] = love.audio.newSource('sounds/timer.mp3', 'static')
 
 }
 

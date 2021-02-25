@@ -58,7 +58,7 @@ end
 
 function RuleState:render()
 
-    local sampTile  = love.graphics.newQuad(0, 0, 200, 200, gTextures['bone']:getDimensions())
+    local sampTile  = love.graphics.newQuad(0, 0, 200, 200, gTextures['sample']:getDimensions())
 
 
     -- menu

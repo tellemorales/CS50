@@ -30,7 +30,7 @@ end
 function EnterHighScoreState:update(dt)
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        local name = string.char(chars[1] .. string.char(chars[2]) .. string.char(chars[3]))
+        local name = string.char(chars[1]) .. string.char(chars[2]) .. string.char(chars[3])
 
         for i = 10, self.scoreIndex, -1 do
             self.highScores[i + 1] = {
@@ -55,42 +55,55 @@ function EnterHighScoreState:update(dt)
         gStateMachine:change('highscore', {
             highScores = self.highScores
         })
+        gSounds['music']:play()
     end
 
     if love.mouseIn(self.x[1], self.y['up'], self.width, self.height) and isPressed(1) then
-        chars[1] = chars[1] + 1
-        if chars[1] > 90 then
-            chars[1] = 65
+        gSounds['select']:play()
+        highlightedChar = 1
+        chars[highlightedChar] = chars[highlightedChar] + 1
+        if chars[highlightedChar] > 90 then
+            chars[highlightedChar] = 65
         end
         
     elseif love.mouseIn(self.x[2], self.y['up'], self.width, self.height) and isPressed(1) then
-        chars[2] = chars[2] + 1
-        if chars[2] > 90 then
-            chars[2] = 65
+        gSounds['select']:play()
+        highlightedChar = 2
+        chars[highlightedChar] = chars[highlightedChar] + 1
+        if chars[highlightedChar] > 90 then
+            chars[highlightedChar] = 65
         end
 
     elseif love.mouseIn(self.x[3], self.y['up'], self.width, self.height) and isPressed(1) then
-        chars[3] = chars[3] + 1
-        if chars[3] > 90 then
-            chars[3] = 65
+        gSounds['select']:play()
+        highlightedChar = 3
+        chars[highlightedChar] = chars[highlightedChar] + 1
+        if chars[highlightedChar] > 90 then
+            chars[highlightedChar] = 65
         end
     end
 
     if love.mouseIn(self.x[1], self.y['down'], self.width, self.height) and isPressed(1) then
-        chars[1] = chars[1] - 1
-        if chars[1] < 65 then
-            chars[1] = 90
+        gSounds['select']:play()
+        highlightedChar = 1
+        chars[highlightedChar] = chars[highlightedChar] - 1
+        if chars[highlightedChar] < 65 then
+            chars[highlightedChar] = 90
         end
     elseif love.mouseIn(self.x[2], self.y['down'], self.width, self.height) and isPressed(1) then
-        chars[2] = chars[2] - 1
-        if chars[2] < 65 then
-            chars[2] = 90
+        gSounds['select']:play()
+        highlightedChar = 2
+        chars[highlightedChar] = chars[highlightedChar] - 1
+        if chars[highlightedChar] < 65 then
+            chars[highlightedChar] = 90
         end
 
     elseif love.mouseIn(self.x[3], self.y['down'], self.width, self.height) and isPressed(1) then
-        chars[3] = chars[3] - 1
-        if chars[3] < 65 then
-            chars[3] = 90
+        gSounds['select']:play()
+        highlightedChar = 3 
+        chars[highlightedChar] = chars[highlightedChar] - 1
+        if chars[highlightedChar] < 65 then
+            chars[highlightedChar] = 90
         end
 
     end
@@ -112,7 +125,7 @@ function EnterHighScoreState:render()
     love.graphics.setFont(gFonts['XXLarge'])
     love.graphics.printf('Your score: ', 0, 300, VIRTUAL_WIDTH , 'center')
     love.graphics.setFont(gFonts['numfont'])
-    love.graphics.printf(self.score, 0, 300, 500, 'left' )
+    love.graphics.printf(self.score, VIRTUAL_WIDTH / 2 + 220, 290, 500, 'left')
     
     love.graphics.setFont(gFonts['XXXLarge'])
 
