@@ -43,15 +43,15 @@ function Board:calculatematch()
 
     for y = 1, 10 do
         local colormatch = self.tiles[y][1].color
-        --local countmatch = self.tiles[y][1].count
+        local countmatch = self.tiles[y][1].count
         matchNum = 1
 
         for x = 2, 10 do
-            if self.tiles[y][x].color == colormatch --[[and self.tiles[y][x].count == countmatch]] then
+            if self.tiles[y][x].color == colormatch and self.tiles[y][x].count == countmatch then
                 matchNum = matchNum + 1
             else
                 colormatch = self.tiles[y][x].color
-                --countmatch = self.tiles[y][x].count
+                countmatch = self.tiles[y][x].count
                 if matchNum >= 3 then
                     local match = {}
 
@@ -81,16 +81,16 @@ function Board:calculatematch()
 
     for x = 1, 10 do
         local colormatch = self.tiles[1][x].color
-        --local countmatch = self.tiles[1][x].count
+        local countmatch = self.tiles[1][x].count
 
         matchNum = 1
 
         for y = 2, 10 do
-            if self.tiles[y][x].color == colormatch --[[and self.tiles[y][x].count == countmatch]] then
+            if self.tiles[y][x].color == colormatch and self.tiles[y][x].count == countmatch then
                 matchNum = matchNum + 1
             else
                 colormatch = self.tiles[y][x].color
-                --countmatch = self.tiles[y][x].count
+                countmatch = self.tiles[y][x].count
 
                 if matchNum >= 3 then
                     local match = {}
