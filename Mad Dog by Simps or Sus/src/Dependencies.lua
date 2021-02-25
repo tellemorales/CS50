@@ -79,7 +79,9 @@ gSounds = {
     ['snore'] = love.audio.newSource('sounds/snore.mp3', 'static'),
     ['growl'] = love.audio.newSource('sounds/growl.mp3', 'static'),
     ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
-    ['select'] = love.audio.newSource('sounds/select.wav', 'static')
+    ['select'] = love.audio.newSource('sounds/select.wav', 'static'),
+    ['gameover'] = love.audio.newSource('sounds/game_over.mp3', 'static'),
+    ['levelup'] = love.audio.newSource('sounds/level_up.mp3', 'static')
 
 }
 

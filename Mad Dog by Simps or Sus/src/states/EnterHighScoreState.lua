@@ -23,7 +23,7 @@ function EnterHighScoreState:init()
 end
 function EnterHighScoreState:enter(params)
     self.highScores = params.highScores
-    self.score = params.score
+    self.score = params.gamescore
     self.scoreIndex = params.scoreIndex
 end
 
@@ -110,7 +110,9 @@ function EnterHighScoreState:render()
     love.graphics.draw(gTextures['down_arrow'], self.x[3], self.y['down'], 0, 0.084, 0.084)
 
     love.graphics.setFont(gFonts['XXLarge'])
-    love.graphics.printf('Your score: ' .. tostring(self.score), 0, 300, VIRTUAL_WIDTH , 'center')
+    love.graphics.printf('Your score: ', 0, 300, VIRTUAL_WIDTH , 'center')
+    love.graphics.setFont(gFonts['numfont'])
+    love.graphics.printf(self.score, 0, 300, 500, 'left' )
     
     love.graphics.setFont(gFonts['XXXLarge'])
 

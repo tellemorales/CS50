@@ -1,5 +1,6 @@
 PlayState = Class{__includes = BaseState}
 
+
 function PlayState:enter(params)
     self.highScores = params.highScores
 end
@@ -35,10 +36,9 @@ function PlayState:init()
        ['main'] = 81
     }
     self.ht = nil
+    self.timer = 5
     self.score = 0
-    self.timer = 120
     self.board = Board(820, 40, 1)
-    self.score = 0
     self.scoregoal = 300
     Timer.every(1, function()
         self.timer = self.timer - 1
@@ -46,11 +46,14 @@ function PlayState:init()
     isPause = false
 end
 
+
+
 function PlayState:update(dt)
     pausepage = 1
 
     if love.mouseIn(self.x['pause'], self.y['pause'], self.width['pause'], self.height['pause']) and isPressed(1) then
         isPause = true
+        gSounds['pause']:play()
     end
 
 
@@ -59,11 +62,19 @@ function PlayState:update(dt)
     if not isPause then
         if self.timer <= 0 then
             Timer.clear()
-            gStateMachine:change()
+            gStateMachine:change('gameover',{
+                highScores = self.highScores,
+                gamescore = self.score
+            })
+            gSounds['gameover']:play()
+            gSounds['music']:pause()
         end
 
         if self.score >= self.scoregoal then
             self.scoregoal = self.scoregoal + 50
+
+            gSounds['levelup']:play()
+
             if self.board.level < 5 then        
                 self.timer = 120 * (self.board.level + 1)
                 self.board.level = self.board.level + 1
@@ -78,7 +89,6 @@ function PlayState:update(dt)
 
         Timer.update(dt)
     elseif isPause then
-
         gSounds['music']:pause()
         pausepage = 2
 
@@ -86,18 +96,21 @@ function PlayState:update(dt)
                 isPause = false
                 pausepage = 1
                 gSounds['music']:play()
+                gSounds['select']:play()
         elseif love.mouseIn(self.x['resume'], self.y['restart'], self.width['resume'], self.height['resume']) and isPressed(1) then
             gStateMachine:change('play', {
                 highScores = self.highScores
             })
             gSounds['music']:setLooping(true)
             gSounds['music']:play()
+            gSounds['select']:play()
             
         elseif love.mouseIn(self.x['main'], self.y['main'], self.width['main'], self.height['main']) and isPressed(1) then
             gStateMachine:change('start', {
                 highScores = self.highScores
             })
             gSounds['music']:play()
+            gSounds['select']:play()
         end
     end
 end

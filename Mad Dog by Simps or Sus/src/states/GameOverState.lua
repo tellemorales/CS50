@@ -12,7 +12,7 @@ GameOverState = Class{__includes = BaseState}
 
 
 function GameOverState:enter(params)
-    self.score = params.score
+    self.score = params.gamescore
     self.highScores = params.highScores
 end
 
@@ -44,6 +44,7 @@ function GameOverState:update(dt)
             gStateMachine:change('start', {
                 highScores = self.highScores
             })
+            gSounds['music']:play()
         end
     end
 end
@@ -77,7 +78,9 @@ function GameOverState:render()
     love.graphics.printf('GAME OVER!', VIRTUAL_WIDTH / 2 - 1000, 430, 2000, 'center')
     love.graphics.setColor(1,1,1)
     love.graphics.setFont(gFonts['XLarge'])
-    love.graphics.printf('Your Final Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 250, 650, 500, 'center')
+    love.graphics.printf('Your Final Score: ', VIRTUAL_WIDTH / 2 - 250, 650, 500, 'center')
+    love.graphics.setFont(gFonts['numfont'])
+    love.graphics.printf(self.score, VIRTUAL_WIDTH / 2 + 230, 633, 500, 'left')
     love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 250, 750, 500, 'center')
 
 end
