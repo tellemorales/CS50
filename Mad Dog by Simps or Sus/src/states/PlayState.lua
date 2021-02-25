@@ -46,7 +46,7 @@ function PlayState:highlight()
     local mouseGX, mouseGY = math.floor((mouseX-self.board.x)/100)+1, math.floor((mouseY-self.board.y)/100)+1
     local inside = mouseGX > 0 and mouseGY > 0 and mouseGX < 11 and mouseGY < 11
     if inside then
-        if love.mouse.wasClicked(1) then
+        if isPressed(1) then
             if self.ht == nil then
                 self.ht = self.board.tiles[mouseGY][mouseGX]
             end
@@ -61,7 +61,7 @@ function PlayState:select()
     local mouseGX, mouseGY = math.floor((mouseX-self.board.x)/100)+1, math.floor((mouseY-self.board.y)/100)+1
     local inside = mouseGX > 0 and mouseGY > 0 and mouseGX < 11 and mouseGY < 11
 
-    if love.mouse.wasClicked(1) and inside then
+    if isPressed(1) and inside then
         if math.abs(mouseGX - hx) + math.abs(mouseGY - hy) <= 1 then
             local highTile = self.board.tiles[hy][hx]
             local swapTile = self.board.tiles[mouseGY][mouseGX]
