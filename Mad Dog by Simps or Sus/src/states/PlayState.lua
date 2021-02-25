@@ -36,7 +36,7 @@ function PlayState:init()
        ['main'] = 81
     }
     self.ht = nil
-    self.timer = 5
+    self.timer = 120
     self.score = 0
     self.board = Board(820, 40, 1)
     self.scoregoal = 300
