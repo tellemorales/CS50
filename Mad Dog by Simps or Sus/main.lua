@@ -131,8 +131,10 @@ end
 function loadHighScores()
     love.filesystem.setIdentity('maddog')
 
+    love.filesystem.newFile('maddog.lst')
+
     -- if the file doesn't exist, initialize it with some default scores
-    if not love.filesystem.getInfo('maddog.lst') == nil then
+    if not love.filesystem.exists('maddog.lst') then
         local scores = ''
         for i = 10, 1, -1 do
             scores = scores .. 'MDG\n'
